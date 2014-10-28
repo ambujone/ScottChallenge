@@ -31,8 +31,15 @@ public class TradingStrategy extends BaseTradingStrategy {
 		}
 		else if (input.getOpen() - input.getClose() > 0.4) {
 			output = tradingManager.sellNumberOfShares(input, tradingManager.getSharesOwned()/2);		
-		} else {
-			output = tradingManager.buySharesOfValue(input, tradingManager.getAvailableFunds());
+		} 
+		else if (input.getOpen() - input.getClose() < -0.1) {
+			output = tradingManager.buySharesOfValue(input, tradingManager.getAvailableFunds());		
+		} 
+		else if (input.getOpen() - input.getClose() < 0.2) {
+			output = tradingManager.buySharesOfValue(input, tradingManager.getAvailableFunds()/2);		
+		} 
+		else {
+			output = tradingManager.doNothing(input);
 		}
 		
 		return output;
